@@ -1,7 +1,3 @@
-package Conexion;
-
-import Main.Main;
-import Proyectos.metodosImagen;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

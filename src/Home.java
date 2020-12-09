@@ -1,21 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Gui;
 
-/**
- *
- * @author Mora17
- */
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Home extends javax.swing.JFrame {
-
+    metodosImagen mi = metodosImagen.getInstance();
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+        cerrar();
     }
 
     /**
@@ -95,7 +92,7 @@ public class Home extends javax.swing.JFrame {
         frame.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -136,4 +133,28 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+    private void cerrar() {
+        try {
+
+            this.setDefaultCloseOperation(Home.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    try {
+                        mi.guardarArreglos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(proyectosCreados.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    salir();
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Se callo");
+        }
+    }
+
+    private void salir() {
+        System.exit(0);
+    }
 }

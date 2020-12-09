@@ -1,9 +1,9 @@
-package Proyectos;
+import java.io.Serializable;
 
-public class imagenGenerada {
+public class imagenOriginal implements Serializable{
     String ruta;
 
-    public imagenGenerada(String ruta) {
+    public imagenOriginal(String ruta) {
         this.ruta = ruta;
     }
 
@@ -14,5 +14,4 @@ public class imagenGenerada {
     public void setRuta(String ruta) {
         this.ruta = ruta;
     }
-    
 }

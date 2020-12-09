@@ -1,6 +1,9 @@
-package Proyectos;
 
-public class Proyecto {
+import java.io.Serializable;
+
+
+
+public class Proyecto implements Serializable{
     imagenGenerada imagenGenerada;
     imagenOriginal imagenOriginal;
     String nombreProyecto;

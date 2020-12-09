@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gui;
 
-import Conexion.Conexion;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
-import javax.swing.ImageIcon;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -17,11 +20,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class crearProyecto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Proyecto
-     */
+    metodosImagen mi = metodosImagen.getInstance();
     public crearProyecto() {
         initComponents();
+        cerrar();
     }
 
     /**
@@ -328,4 +330,28 @@ public class crearProyecto extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtSuperior;
     // End of variables declaration//GEN-END:variables
+    private void cerrar() {
+        try {
+
+            this.setDefaultCloseOperation(crearProyecto.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    try {
+                        mi.guardarArreglos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(proyectosCreados.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    salir();
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Se callo");
+        }
+    }
+
+    private void salir() {
+        System.exit(0);
+    }
 }

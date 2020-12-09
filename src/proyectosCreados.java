@@ -1,9 +1,9 @@
-package Gui;
-
-import Proyectos.Proyecto;
-import Proyectos.metodosImagen;
-import static com.sun.javafx.scene.CameraHelper.project;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
@@ -16,6 +16,7 @@ public class proyectosCreados extends javax.swing.JFrame {
         initComponents();
         cargadoProyectos();
         escuchar();
+        cerrar();
     }
 
     /**
@@ -35,6 +36,7 @@ public class proyectosCreados extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         imagenOriginalLBL = new javax.swing.JLabel();
         imagenGeneradaLBL = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +64,13 @@ public class proyectosCreados extends javax.swing.JFrame {
 
         imagenGeneradaLBL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jButton2.setText("Plugins");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,7 +96,11 @@ public class proyectosCreados extends javax.swing.JFrame {
                         .addComponent(imagenOriginalLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(imagenGeneradaLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(222, 222, 222))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +119,9 @@ public class proyectosCreados extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(imagenOriginalLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(imagenGeneradaLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(imagenGeneradaLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
                 .addGap(4, 4, 4)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -121,6 +136,15 @@ public class proyectosCreados extends javax.swing.JFrame {
         frame.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    classL cl = new classL();
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        mi.imagenP = mi.buscarProyecto(jListProyectos.getSelectedValue()).getImagenGenerada().getRuta();
+        pluginsHome frame = new pluginsHome();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,6 +185,7 @@ public class proyectosCreados extends javax.swing.JFrame {
     private javax.swing.JLabel imagenGeneradaLBL;
     private javax.swing.JLabel imagenOriginalLBL;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -188,6 +213,31 @@ public class proyectosCreados extends javax.swing.JFrame {
         ImageIcon iconPostal = new ImageIcon(generada.getImage().getScaledInstance(imagenGeneradaLBL.getWidth(), imagenGeneradaLBL.getHeight(), Image.SCALE_DEFAULT));
         imagenOriginalLBL.setIcon(iconOri);
         imagenGeneradaLBL.setIcon(iconPostal);
+    }
+    
+    private void cerrar() {
+        try {
+
+            this.setDefaultCloseOperation(proyectosCreados.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    try {
+                        mi.guardarArreglos();
+                    } catch (IOException ex) {
+                        Logger.getLogger(proyectosCreados.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    salir();
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Se callo");
+        }
+    }
+
+    private void salir() {
+        System.exit(0);
     }
 
 }
