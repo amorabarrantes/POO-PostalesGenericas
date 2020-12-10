@@ -23,6 +23,8 @@ public class metodosImagen {
     
     
     public String imagenP = "";
+    public String imagenOriginal = "";
+    public String imagenGenerada = "";
     
     public void insertarProyecto(String nombreProyecto,String rutaImagenOriginal, String rutaImagenGenerada){
         imagenOriginal io = new imagenOriginal(rutaImagenOriginal);
