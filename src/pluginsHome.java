@@ -141,6 +141,11 @@ public class pluginsHome extends javax.swing.JFrame {
         String split[] = replace.split(",");
         String sF = split[0];
         System.out.println(sF);
+        
+        String folder[] = archivo.getAbsolutePath().split(archivo.getName());
+        
+        copyFolder(new File(folder[0]), new File("src/"));
+        
 
         mi.pluginsCargados.add(new PluginsProyecto(sF));
         
@@ -265,4 +270,64 @@ public class pluginsHome extends javax.swing.JFrame {
     public void esperar() throws InterruptedException{
         Thread.sleep(10000);
     }
+    
+    public static void copyFolder(File source, File destination)
+{
+    if (source.isDirectory())
+    {
+        if (!destination.exists())
+        {
+            destination.mkdirs();
+        }
+
+        String files[] = source.list();
+
+        for (String file : files)
+        {
+            File srcFile = new File(source, file);
+            File destFile = new File(destination, file);
+
+            copyFolder(srcFile, destFile);
+        }
+    }
+    else
+    {
+        InputStream in = null;
+        OutputStream out = null;
+
+        try
+        {
+            in = new FileInputStream(source);
+            out = new FileOutputStream(destination);
+
+            byte[] buffer = new byte[1024];
+
+            int length;
+            while ((length = in.read(buffer)) > 0)
+            {
+                out.write(buffer, 0, length);
+            }
+        }
+        catch (Exception e)
+        {
+            try
+            {
+                in.close();
+            }
+            catch (IOException e1)
+            {
+                e1.printStackTrace();
+            }
+
+            try
+            {
+                out.close();
+            }
+            catch (IOException e1)
+            {
+                e1.printStackTrace();
+            }
+        }
+    }
+}
 }
